@@ -1,9 +1,0 @@
-# 2. WAP to enter P, T, R and calculate simple Interest 
-# (Formula: P*R*T/100)
-
-p = int(input('Enter Principle Amount: '))
-r = int(input('Enter Rate: '))
-t = int(input('Enter Time: '))
-
-si = p*r*t/100
-print('Simple Interest is',si)
