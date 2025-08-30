@@ -5,9 +5,7 @@
 # For unit above 250 Rs. 1.50/unit
 # An additional surcharge of 20% is added to the bill
 
-# Electricity bill calculation
-
-units = int(input("Enter units consumed: "))
+units = int(input("Enter Units: "))
 
 if units <= 50:
     bill = units * 0.50
@@ -19,5 +17,4 @@ else:
     bill = (50 * 0.50) + (100 * 0.75) + (100 * 1.20) + (units - 250) * 1.50
 
 bill = bill + (bill * 0.20)   # add 20% surcharge
-
 print("Total Bill = Rs.", bill)
