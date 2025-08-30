@@ -1,4 +1,5 @@
 # 12. WAP to check if given 3 digit number is a palindrome or not.
+# For a 3-digit number, only the first and last digit matter.
 
 num = int(input('Enter three-digit Number: '))
 
