@@ -1,0 +1,216 @@
+Q1. Login to MySQL and view all databases already present. You should get following result :
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| ass1               |             
+| db25               |
+| fbs                |
+| information_schema |
+| mysql              |
+| performance_schema |          
+| sys                |             
++--------------------+
+7 rows in set (0.00 sec)
+
+
+Q2. Write an SQL statement to create a simple table countries including columns country_id, country_name and region_id. After this display the structure of table as below:
+mysql> USE ass1;
+Database changed
+mysql> CREATE TABLE Countries(
+    -> Country_ID INT,
+    -> Country_Name VARCHAR(25),
+    -> Region_ID INT);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DESC countries;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Country_ID   | int         | YES  |     | NULL    |       |
+| Country_Name | varchar(25) | YES  |     | NULL    |       |
+| Region_ID    | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+
+Q3. Write an SQL statement to create a table named jobs including columns job_id, job_title, min_salary, max_salary and check whether the max_salary amount exceeding the upper limit 25000. Also set job_id as primary key and entering null values for job_title is not allowed.
+mysql> CREATE TABLE Jobs(
+    -> Job_ID INT PRIMARY KEY,
+    -> Job_Title VARCHAR(20) NOT NULL,
+    -> Min_Salary INT,
+    -> Max_Salary INT CHECK (Max_Salary <= 25000));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> DESC jobs;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Job_ID     | int         | NO   | PRI | NULL    |       |
+| Job_Title  | varchar(20) | NO   |     | NULL    |       |
+| Min_Salary | int         | YES  |     | NULL    |       |
+| Max_Salary | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO jobs(Job_ID, Job_Title, Min_Salary, Max_Salary)
+    -> VALUES (1, "Software Developer", 20000, 30000);
+ERROR 3819 (HY000): Check constraint 'jobs_chk_1' is violated.
+
+mysql> INSERT INTO jobs(Job_ID, Job_Title, Min_Salary, Max_Salary)
+    -> VALUES (1, "Software Developer", 20000, 25000);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> TABLE jobs;
++--------+--------------------+------------+------------+
+| Job_ID | Job_Title          | Min_Salary | Max_Salary |
++--------+--------------------+------------+------------+
+|      1 | Software Developer |      20000 |      25000 |
++--------+--------------------+------------+------------+
+
+
+Q4. Write a SQL statement to create a table named job_history including columns employee_id, start_date, end_date, job_id and department_id
+mysql> CREATE TABLE Job_History(
+    -> Employee_ID INT,
+    -> Start_Date DATE,
+    -> End_Date DATE,
+    -> Job_ID INT,
+    -> Department_ID INT);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> DESC job_history;
++---------------+------+------+-----+---------+-------+
+| Field         | Type | Null | Key | Default | Extra |
++---------------+------+------+-----+---------+-------+
+| Employee_ID   | int  | YES  |     | NULL    |       |
+| Start_Date    | date | YES  |     | NULL    |       |
+| End_Date      | date | YES  |     | NULL    |       |
+| Job_ID        | int  | YES  |     | NULL    |       |
+| Department_ID | int  | YES  |     | NULL    |       |
++---------------+------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+
+Q5. Write an SQL statement to alter a table named countries to make sure that no duplicate data against column country_id will be allowed at the time of insertion.
+mysql> ALTER TABLE countries
+    -> MODIFY COLUMN Country_ID INT UNIQUE;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC countries;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| Country_ID   | int         | YES  | UNI | NULL    |       |
+| Country_Name | varchar(25) | YES  |     | NULL    |       |
+| Region_ID    | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO countries(Country_ID, Country_name, Region_ID)
+    -> VALUES(1, "India", 101);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> TABLE countries;
++------------+--------------+-----------+
+| Country_ID | Country_Name | Region_ID |
++------------+--------------+-----------+
+|          1 | India        |       101 |
++------------+--------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO countries(Country_ID, Country_name, Region_ID)
+    -> VALUES(1, "America", 102);
+ERROR 1062 (23000): Duplicate entry '1' for key 'countries.Country_ID'
+
+
+Q6. Write an SQL statement to create a table named jobs including columns job_id, job_title, min_salary and max_salary, and make sure that, the default value for job_title is blank and min_salary is 8000 and max_salary is NULL will be entered automatically at the time of insertion if no value assigned for the specified columns.
+mysql> ALTER TABLE jobs
+    -> modify Job_Title VARCHAR(20) DEFAULT "HR Manager",
+    -> modify Min_Salary INT DEFAULT 8000;
+Query OK, 0 rows affected (0.17 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC jobs;
++------------+-------------+------+-----+------------+-------+
+| Field      | Type        | Null | Key | Default    | Extra |
++------------+-------------+------+-----+------------+-------+
+| Job_ID     | int         | NO   | PRI | NULL       |       |
+| Job_Title  | varchar(20) | YES  |     | HR Manager |       |
+| Min_Salary | int         | YES  |     | 8000       |       |
+| Max_Salary | int         | YES  |     | NULL       |       |
++------------+-------------+------+-----+------------+-------+
+4 rows in set (0.00 sec)
+
+
+Q7. Create a Department table with following structure.
+mysql> CREATE TABLE Department(
+    -> Department_ID DECIMAL(4,0) NOT NULL DEFAULT 0,
+    -> Department_Name VARCHAR(30) NOT NULL,
+    -> Manager_ID DECIMAL(6,0) NOT NULL DEFAULT 0,
+    -> Location_ID DECIMAL(4,0) DEFAULT NULL,
+    -> PRIMARY KEY (DEPARTMENT_ID, MANAGER_ID));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> DESC department;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| Department_ID   | decimal(4,0) | NO   | PRI | 0       |       |
+| Department_Name | varchar(30)  | NO   |     | NULL    |       |
+| Manager_ID      | decimal(6,0) | NO   | PRI | 0       |       |
+| Location_ID     | decimal(4,0) | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+
+Q8. Write an SQL statement to create a table employees including columns employee_id, first_name, last_name, email, phone_number hire_date, job_id, salary, commission, manager_id and department_id and make sure that, the employee_id column does not contain any duplicate value at the time of insertion and the foreign key columns combined by department_id and manager_id columns contain only those unique combination values, which combinations are exists in the departments table.
+mysql> CREATE TABLE departments(
+    -> Department_ID INT,
+    -> Manager_ID INT,
+    -> Dept_Name VARCHAR(50),
+    -> PRIMARY KEY (Department_ID, Manager_ID));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DESC departments;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Department_ID | int         | NO   | PRI | NULL    |       |
+| Manager_ID    | int         | NO   | PRI | NULL    |       |
+| Dept_Name     | varchar(50) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE employees(
+    -> Employee_ID INT PRIMARY KEY,
+    -> First_Name VARCHAR(25),
+    -> Last_Name VARCHAR(25),
+    -> Email VARCHAR(50),
+    -> Phone_Number BIGINT,
+    -> Hire_Date DATE,
+    -> Job_ID INT,
+    -> Salary INT,
+    -> Commission INT,
+    -> Manager_ID INT,
+    -> Department_ID INT,
+    -> CONSTRAINT fk_dept_mgr FOREIGN KEY (Department_ID, Manager_ID) REFERENCES departments(Department_ID, Manager_ID));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> DESC employees;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Employee_ID   | int         | NO   | PRI | NULL    |       |
+| First_Name    | varchar(25) | YES  |     | NULL    |       |
+| Last_Name     | varchar(25) | YES  |     | NULL    |       |
+| Email         | varchar(50) | YES  |     | NULL    |       |
+| Phone_Number  | bigint      | YES  |     | NULL    |       |
+| Hire_Date     | date        | YES  |     | NULL    |       |
+| Job_ID        | int         | YES  |     | NULL    |       |
+| Salary        | int         | YES  |     | NULL    |       |
+| Commission    | int         | YES  |     | NULL    |       |
+| Manager_ID    | int         | YES  |     | NULL    |       |
+| Department_ID | int         | YES  | MUL | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
