@@ -1,0 +1,305 @@
+mysql> USE ass4;
+Database changed
+
+mysql> CREATE TABLE employees (
+    -> Employee_ID INT PRIMARY KEY,
+    -> First_Name VARCHAR(25),
+    -> Last_Name VARCHAR(25),
+    -> Email VARCHAR(50),
+    -> Phone_Number BIGINT,
+    -> Hire_Date DATE,
+    -> Job_ID VARCHAR(30),
+    -> Salary INT,
+    -> Commission INT,
+    -> Manager_ID INT,
+    -> Department_ID INT );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> DESC employees;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| Employee_ID   | int         | NO   | PRI | NULL    |       |
+| First_Name    | varchar(25) | YES  |     | NULL    |       |
+| Last_Name     | varchar(25) | YES  |     | NULL    |       |
+| Email         | varchar(50) | YES  |     | NULL    |       |
+| Phone_Number  | bigint      | YES  |     | NULL    |       |
+| Hire_Date     | date        | YES  |     | NULL    |       |
+| Job_ID        | varchar(30) | YES  |     | NULL    |       |
+| Salary        | int         | YES  |     | NULL    |       |
+| Commission    | int         | YES  |     | NULL    |       |
+| Manager_ID    | int         | YES  |     | NULL    |       |
+| Department_ID | int         | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+11 rows in set (0.06 sec)
+
+mysql> INSERT INTO employees VALUES
+    -> (101, 'Rasika', 'Mate', 'rasika@gmail.com', 9876500001, '2025-05-20', 'SDE', 55000, NULL, 301, 30),
+    -> (102, 'Rushi', 'Sharma', 'rushi@gmail.com', 9876500003, '2025-10-10', 'Analyst', 60000, NULL, 303, 50),
+    -> (103, 'Neha', 'Patil', 'neha@gmail.com', 9876500002, '2024-03-15', 'Tester', 32000, NULL, 302, 40),
+    -> (104, 'Pradnya', 'Joshi', 'pradnya@gmail.com', 9876500004, '2018-11-05', 'Clerk', 50000, NULL, 304, 60),
+    -> (105, 'Riya', 'Desai', 'riya@gmail.com', 9876500005, '2022-01-18', 'Tester', 11000, NULL, 305, 30);
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> TABLE employees;
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+| Employee_ID | First_Name | Last_Name | Email             | Phone_Number | Hire_Date  | Job_ID  | Salary | Commission | Manager_ID | Department_ID |
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+|         101 | Rasika     | Mate      | rasika@gmail.com  |   9876500001 | 2025-05-20 | SDE     |  55000 |       NULL |        301 |            30 |
+|         102 | Rushi      | Sharma    | rushi@gmail.com   |   9876500003 | 2025-10-10 | Analyst |  60000 |       NULL |        303 |            50 |
+|         103 | Neha       | Patil     | neha@gmail.com    |   9876500002 | 2024-03-15 | Tester  |  32000 |       NULL |        302 |            40 |
+|         104 | Pradnya    | Joshi     | pradnya@gmail.com |   9876500004 | 2018-11-05 | Clerk   |  50000 |       NULL |        304 |            60 |
+|         105 | Riya       | Desai     | riya@gmail.com    |   9876500005 | 2022-01-18 | Tester  |  11000 |       NULL |        305 |            30 |
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+5 rows in set (0.00 sec)
+
+
+Q1. Write a query to display the names (first_name, last_name) using alias name “First Name", "Last Name.
+mysql> SELECT First_Name AS "First Name", Last_Name AS "Last Name" FROM employees;
++------------+-----------+
+| First Name | Last Name |
++------------+-----------+
+| Rasika     | Mate      |
+| Rushi      | Sharma    |
+| Neha       | Patil     |
+| Pradnya    | Joshi     |
+| Riya       | Desai     |
++------------+-----------+
+5 rows in set (0.00 sec)
+
+
+Q2. Write a query to get unique department ID from employee table.
+mysql> SELECT DISTINCT Department_ID FROM employees;
++---------------+
+| Department_ID |
++---------------+
+|            30 |
+|            50 |
+|            40 |
+|            60 |
++---------------+
+4 rows in set (0.00 sec)
+
+
+Q3. Write a query to get all employee details from the employee table order by first name, descending
+mysql> SELECT * FROM employees ORDER BY First_Name DESC;
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+| Employee_ID | First_Name | Last_Name | Email             | Phone_Number | Hire_Date  | Job_ID  | Salary | Commission | Manager_ID | Department_ID |
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+|         102 | Rushi      | Sharma    | rushi@gmail.com   |   9876500003 | 2025-10-10 | Analyst |  60000 |       NULL |        303 |            50 |
+|         105 | Riya       | Desai     | riya@gmail.com    |   9876500005 | 2022-01-18 | Tester  |  11000 |       NULL |        305 |            30 |
+|         101 | Rasika     | Mate      | rasika@gmail.com  |   9876500001 | 2025-05-20 | SDE     |  55000 |       NULL |        301 |            30 |
+|         104 | Pradnya    | Joshi     | pradnya@gmail.com |   9876500004 | 2018-11-05 | Clerk   |  50000 |       NULL |        304 |            60 |
+|         103 | Neha       | Patil     | neha@gmail.com    |   9876500002 | 2024-03-15 | Tester  |  32000 |       NULL |        302 |            40 |
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+5 rows in set (0.04 sec)
+
+
+Q4. Write a query to get the names (first_name, last_name), salary, PF of all the employees (PF is calculated as 15% of salary).
+mysql> SELECT First_Name, Last_Name, Salary, Salary * 0.15 AS PF FROM employees;
++------------+-----------+--------+---------+
+| First_Name | Last_Name | Salary | PF      |
++------------+-----------+--------+---------+
+| Rasika     | Mate      |  55000 | 8250.00 |
+| Rushi      | Sharma    |  60000 | 9000.00 |
+| Neha       | Patil     |  32000 | 4800.00 |
+| Pradnya    | Joshi     |  50000 | 7500.00 |
+| Riya       | Desai     |  11000 | 1650.00 |
++------------+-----------+--------+---------+
+5 rows in set (0.04 sec)
+
+
+Q5. Write a query to get the employee ID, names (first_name, last_name), salary in ascending order of salary.
+mysql> SELECT Employee_ID, First_Name, Last_Name, Salary
+    -> FROM employees
+    -> ORDER BY Salary ASC;
++-------------+------------+-----------+--------+
+| Employee_ID | First_Name | Last_Name | Salary |
++-------------+------------+-----------+--------+
+|         105 | Riya       | Desai     |  11000 |
+|         103 | Neha       | Patil     |  32000 |
+|         104 | Pradnya    | Joshi     |  50000 |
+|         101 | Rasika     | Mate      |  55000 |
+|         102 | Rushi      | Sharma    |  60000 |
++-------------+------------+-----------+--------+
+5 rows in set (0.00 sec)
+
+
+Q6. Write a query to get the total salaries payable to employees.
+mysql> SELECT SUM(Salary) AS Total_Salary FROM employees;
++--------------+
+| Total_Salary |
++--------------+
+|       208000 |
++--------------+
+1 row in set (0.04 sec)
+
+
+Q7. Write a query to get the maximum and minimum salary from employees table.
+mysql> SELECT MAX(Salary) AS Max_Salary, MIN(Salary) AS Min_Salary FROM employees;
++------------+------------+
+| Max_Salary | Min_Salary |
++------------+------------+
+|      60000 |      11000 |
++------------+------------+
+1 row in set (0.00 sec)
+
+
+Q8. Write a query to get the average salary and number of employees in the employees table.
+mysql> SELECT AVG(Salary) AS Avg_Salary, COUNT(*) AS No_of_Employees FROM employees;
++------------+-----------------+
+| Avg_Salary | No_of_Employees |
++------------+-----------------+
+| 41600.0000 |               5 |
++------------+-----------------+
+1 row in set (0.04 sec)
+
+
+Q9. Write a query to get the number of employees working with the company.
+mysql> SELECT COUNT(*) AS Total_Employees FROM employees;
++-----------------+
+| Total_Employees |
++-----------------+
+|               5 |
++-----------------+
+1 row in set (0.05 sec)
+
+
+Q10.Write a query to get the number of jobs available in the employees table
+mysql> SELECT COUNT(DISTINCT Job_ID) AS Total_Jobs FROM employees;
++------------+
+| Total_Jobs |
++------------+
+|          4 |
++------------+
+1 row in set (0.00 sec)
+
+
+Q11.Write a query to select first 10 records from a table.
+mysql> SELECT * FROM employees
+    -> LIMIT 10;
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+| Employee_ID | First_Name | Last_Name | Email             | Phone_Number | Hire_Date  | Job_ID  | Salary | Commission | Manager_ID | Department_ID |
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+|         101 | Rasika     | Mate      | rasika@gmail.com  |   9876500001 | 2025-05-20 | SDE     |  55000 |       NULL |        301 |            30 |
+|         102 | Rushi      | Sharma    | rushi@gmail.com   |   9876500003 | 2025-10-10 | Analyst |  60000 |       NULL |        303 |            50 |
+|         103 | Neha       | Patil     | neha@gmail.com    |   9876500002 | 2024-03-15 | Tester  |  32000 |       NULL |        302 |            40 |
+|         104 | Pradnya    | Joshi     | pradnya@gmail.com |   9876500004 | 2018-11-05 | Clerk   |  50000 |       NULL |        304 |            60 |
+|         105 | Riya       | Desai     | riya@gmail.com    |   9876500005 | 2022-01-18 | Tester  |  11000 |       NULL |        305 |            30 |
++-------------+------------+-----------+-------------------+--------------+------------+---------+--------+------------+------------+---------------+
+5 rows in set (0.05 sec)
+
+
+Q12.Write a query to display the name (first_name, last_name) and salary for all employees whose salary is not in the range $10,000 through $15,000
+mysql> SELECT First_Name, Last_Name, Salary
+    -> FROM employees
+    -> WHERE Salary NOT BETWEEN 10000 AND 15000;
++------------+-----------+--------+
+| First_Name | Last_Name | Salary |
++------------+-----------+--------+
+| Rasika     | Mate      |  55000 |
+| Rushi      | Sharma    |  60000 |
+| Neha       | Patil     |  32000 |
+| Pradnya    | Joshi     |  50000 |
++------------+-----------+--------+
+4 rows in set (0.02 sec)
+
+
+Q13.Write a query to display the name (first_name, last_name) and department ID of all employees in departments 30 or 100 in ascending order.
+mysql> SELECT First_Name, Last_Name, Department_ID
+    -> FROM employees
+    -> WHERE Department_ID IN (30, 100)
+    -> ORDER BY Department_ID ASC;
++------------+-----------+---------------+
+| First_Name | Last_Name | Department_ID |
++------------+-----------+---------------+
+| Rasika     | Mate      |            30 |
+| Riya       | Desai     |            30 |
++------------+-----------+---------------+
+2 rows in set (0.00 sec)
+
+
+Q14.Write a query to display the name (first_name, last_name) and salary for all employees whose salary is not in the range $10,000 through $15,000 and are in department 30 or 100.
+mysql> SELECT First_Name, Last_Name, Salary
+    -> FROM employees
+    -> WHERE Salary NOT BETWEEN 10000 AND 15000
+    -> AND Department_ID IN (30, 100);
++------------+-----------+--------+
+| First_Name | Last_Name | Salary |
++------------+-----------+--------+
+| Rasika     | Mate      |  55000 |
++------------+-----------+--------+
+1 row in set (0.00 sec)
+
+
+Q15.Write a query to display the name (first_name, last_name) and hire date for all employees who were hired in 1987.
+mysql> SELECT First_Name, Last_Name, Hire_Date
+    -> FROM employees
+    -> WHERE YEAR(Hire_Date) = 1987;
++------------+-----------+------------+
+| First_Name | Last_Name | Hire_Date  |
++------------+-----------+------------+
+| Rohit      | Katkar    | 1987-01-01 |
++------------+-----------+------------+
+1 row in set (0.00 sec)
+
+
+Q16.Write a query to display the first_name of all employees who have both "b" and "c" in their first name
+mysql> SELECT First_Name
+    -> FROM employees
+    -> WHERE First_Name LIKE '%B%'
+    -> AND First_Name LIKE '%C%';
+Empty set (0.00 sec)
+
+
+Q17.Write a query to display the last name, job, and salary for all employees whose job is that of a Programmer or a Shipping Clerk, and whose salary is not equal to $4,500, $10,000, or $15,000.
+mysql> SELECT Last_Name, Job_ID, Salary
+    -> FROM employees
+    -> WHERE Job_ID IN ('Programmer', 'Shipping Clerk')
+    -> AND Salary NOT IN (4500, 10000, 15000);
+Empty set (0.00 sec)
+
+
+Q18.Write a query to display the last name of employees whose names have exactly 6 characters.
+mysql> SELECT Last_Name
+    -> FROM employees
+    -> WHERE LENGTH(Last_Name) = 6;
++-----------+
+| Last_Name |
++-----------+
+| Sharma    |
+| Katkar    |
++-----------+
+2 rows in set (0.04 sec)
+
+
+Q19.Write a query to display the last name of employees having 'e' as the third character.
+mysql> SELECT Last_Name
+    -> FROM employees
+    -> WHERE Last_Name LIKE '__e%';
+Empty set (0.00 sec)
+
+
+Q20.Write a query to display the jobs/designations available in the employees table.
+mysql> SELECT DISTINCT Job_ID
+    -> FROM employees;
++---------+
+| Job_ID  |
++---------+
+| SDE     |
+| Analyst |
+| Tester  |
+| Clerk   |
+| SDE2    |
+| Anlyst  |
+| HR      |
++---------+
+7 rows in set (0.05 sec)
+
+
+Q21.Write a query to select all record from employees where last name in 'BLAKE', 'SCOTT', 'KING' and 'FORD'
+mysql> SELECT *
+    -> FROM employees
+    -> WHERE Last_Name IN ('BLAKE', 'SCOTT', 'KING', 'FORD');
+Empty set (0.00 sec)
