@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration Form</title>
+</head>
+
+<body>
+    <form action="/dummy" method="get">
+        <table align="center" border="2" cellpadding="5" cellspacing="2" width="35%">
+            <tr>
+                <td align="center">
+                    <h2>Registration Form</h2>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Enter Username: </b> <input type="text" name="username" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Enter Password: </b> <input type="password" name="password" required>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <b>Address:</b><br>
+                    <textarea rows="3" cols="37" name="address"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <b>Select Games:</b><br>
+                    <input type="checkbox" name="games" value="hockey"> Hockey<br>
+                    <input type="checkbox" name="games" value="football"> Football<br>
+                    <input type="checkbox" name="games" value="cricket"> Cricket<br>
+                    <input type="checkbox" name="games" value="badminton"> Badminton
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Gender:</b> <input type="radio" name="gender" value="male">Male
+                    <input type="radio" name="gender" value="female">Female
+                    <input type="radio" name="gender" value="others">Others
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Select City: </b> <select name="city">
+                        <option value="">--select--</option>
+                        <option value="">Pune</option>
+                        <option value="">Satara</option>
+                        <option value="">Mumbai</option>
+                        <option value="">Nashik</option>
+                        <option value="">Kolhapur</option>
+                        <option value="">Nagpur</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Select Photo:</b> <input type="file">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <center>
+                        <input type="submit" value="Submit">
+                        <input type="reset" value="Reset">
+                    </center>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</body>
+
+</html>
